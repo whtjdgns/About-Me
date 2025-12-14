@@ -1,1 +1,3 @@
-# resu_me
+# About Me  
+
+ 이력서 및 포트폴리오 
