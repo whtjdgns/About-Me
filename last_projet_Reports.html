@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 기반 스마트 가계부 '핀로그(FinLog)' 기술 보고서</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-color: #334155;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        h1 {
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: #475569;
+            margin-top: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Custom List Style for 1) 2) 3) */
+        ol.custom-list {
+            list-style-type: none;
+            counter-reset: my-counter;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+        ol.custom-list li {
+            counter-increment: my-counter;
+            margin-bottom: 8px;
+            padding-left: 30px; /* Space for the number */
+            position: relative;
+        }
+
+        ol.custom-list li::before {
+            content: counter(my-counter) ") ";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        /* Keep standard padding for other lists if needed */
+        ul, ol:not(.custom-list) {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eff6ff;
+            color: var(--secondary-color);
+            font-weight: 600;
+            width: 20%;
+        }
+
+        /* Box Styling for emphasis */
+        .info-box {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Troubleshooting Section */
+        .troubleshooting {
+            background-color: #fff1f2;
+            border-left: 4px solid #e11d48;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .troubleshooting h3 {
+            color: #be123c;
+            margin-top: 0;
+        }
+
+        /* Architecture Steps */
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .step-num {
+            background-color: var(--primary-color);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            th, td {
+                display: block;
+                width: 100%;
+            }
+            th {
+                background-color: #e0f2fe;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>[Project] AI 기반 스마트 가계부 '핀로그' 기술 보고서</h1>
+
+        <h2>1. 개요 (Executive Summary)</h2>
+        <div class="info-box">
+            <ol class="custom-list">
+                <p><strong>프로젝트명:</strong> 핀로그 (FinLog)</p>
+                <p><strong>목적:</strong> 거래 내역 입력 최소화 및 AI 자동 카테고리 분류를 통한 효율적인 개인 금융 관리 웹 애플리케이션 개발자로서의</p>
+                <p><strong>주요 기술:</strong> React.js, Node.js, Express.js, MySQL, Google Gemini API</p>
+                <p><strong>핵심 성과:</strong> 자연어 처리를 통한 거래 내역 자동 분류 기능 구현, 직관적인 대시보드 및 소비 리포트 제공</p>
+            </ol>
+        </div>
+
+        <h2>2. 서론 (Introduction)</h2>
+        <h3>2.1. 배경 및 필요성</h3>
+        <p>기존 수기 가계부는 번거로운 입력과 카테고리 분류의 어려움으로 인해 지속적인 관리가 힘들다는 단점이 있었습니다. 개인 금융 데이터의 체계적 관리와 소비 습관 파악의 중요성이 증대됨에 따라, <span class="highlight">생성형 AI 기술을 활용하여 사용자 경험을 혁신</span>할 기회를 포착했습니다.</p>
+
+        <h3>2.2. 프로젝트 목표</h3>
+        <ol class="custom-list">
+            <p><strong>자동화:</strong> 거래 내용 입력 시 AI가 적절한 카테고리를 즉시 추천하여 입력 시간 단축.</p>
+            <p><strong>시각화:</strong> 수입/지출 현황을 한눈에 파악할 수 있는 직관적인 대시보드 및 차트 제공.</p>
+            <p><strong>개인화:</strong> 사용자 정의 카테고리 기능을 통한 맞춤형 관리 환경 제공.</p>
+            <p><strong>보안성:</strong> JWT 기반의 안전한 사용자 인증 시스템 구축.</p>
+        </ol>
+
+        <h2>3. 시스템 설계 및 아키텍처</h2>
+        
+        <h3>3.1. 기술 스택 (Tech Stack)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>구분</th>
+                    <th>기술 (Technology)</th>
+                    <th>설명</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Frontend</strong></td>
+                    <td>React.js, Tailwind CSS</td>
+                    <td>사용자 인터페이스 구현, SPA 구조, 반응형 디자인</td>
+                </tr>
+                <tr>
+                    <td><strong>Backend</strong></td>
+                    <td>Node.js, Express.js</td>
+                    <td>RESTful API 서버 구축, 비즈니스 로직 처리</td>
+                </tr>
+                <tr>
+                    <td><strong>Database</strong></td>
+                    <td>MySQL</td>
+                    <td>관계형 데이터베이스, 사용자 및 거래 데이터 저장</td>
+                </tr>
+                <tr>
+                    <td><strong>AI/External</strong></td>
+                    <td>Google Gemini API, Nodemailer</td>
+                    <td>카테고리 추천 기능 수행, 이메일 발송 서비스</td>
+                </tr>
+                <tr>
+                    <td><strong>Auth</strong></td>
+                    <td>JWT (JSON Web Token)</td>
+                    <td>상태 비저장(Stateless) 방식의 안전한 인증 처리</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>3.2. 시스템 아키텍처 흐름</h3>
+        <div class="step"><span class="step-num">1</span> Client: 거래 내역 입력 (디바운싱 적용) -> API 요청</div>
+        <div class="step"><span class="step-num">2</span> Server: 입력 내용 + 카테고리 후보군 패키징 -> AI API 요청</div>
+        <div class="step"><span class="step-num">3</span> AI Engine: Google Gemini가 문맥 분석 후 최적 카테고리 반환</div>
+        <div class="step"><span class="step-num">4</span> DB: 최종 거래 내역 저장 (Users, Transactions)</div>
+        <div class="step"><span class="step-num">5</span> Client: 대시보드 및 차트 실시간 업데이트</div>
+
+        <h3>3.3. 데이터베이스 설계 (ERD)</h3>
+        <ol class="custom-list">
+            <P><strong>Users:</strong> 사용자 인증 정보 및 프로필 저장.</P>
+            <p><strong>Transactions:</strong> 수입/지출 내역, 금액, 날짜 등 핵심 데이터.</p>
+            <p><strong>Categories:</strong> 시스템 기본 카테고리 및 사용자 정의 카테고리.</p>
+        </ol>
+
+        <h2>4. 핵심 기능 구현 (Key Feature Implementation)</h2>
+        
+        <h3>4.1. AI 기반 카테고리 자동 추천 (핵심)</h3>
+        <ol class="custom-list">
+            <p><strong>작동 원리:</strong> 사용자가 "스타벅스 아메리카노" 입력 시, 백엔드에서 Gemini API에 최적화된 프롬프트(내용 + 후보군)를 전송합니다.</p>
+            <p><strong>최적화:</strong> 디바운싱(Debouncing) 기술을 적용하여 불필요한 API 호출을 최소화하고 비용을 절감했습니다.</p>
+            <p><strong>기술적 챌린지:</strong> AI 응답 지연 시간을 고려한 UI 처리 및 정확도 높은 프롬프트 엔지니어링 수행.</p>
+        </ol>
+
+        <h3>4.2. JWT 인증 및 보안</h3>
+        <ol class="custom-list">
+            <li>회원가입 시 비밀번호를 <strong>bcrypt</strong>로 해싱하여 안전하게 저장합니다.</li>
+            <li>로그인 성공 시 <strong>Access Token</strong>을 발급하고, API 요청 시 미들웨어를 통해 유효성을 검증합니다.</li>
+        </ol>
+
+        <h3>4.3. 대시보드 및 데이터 시각화</h3>
+        <ol class="custom-list">
+            <li>월별 수입/지출 합계를 실시간으로 계산하여 표시합니다.</li>
+            <li><strong>Chart.js</strong>를 활용하여 카테고리별 지출 비중을 파이 차트로 시각화했습니다.</li>
+        </ol>
+
+        <h2>5. 결과 및 성과 (Results & Outcomes)</h2>
+        
+        <h3>5.1. 프로젝트 성과</h3>
+        <ol class="custom-list">
+            <P><strong>정성적 성과:</strong> 거래 내역 입력 시간을 획기적으로 단축하여 사용자 편의성 증대.</P>
+            <p><strong>기술적 성과:</strong> React, Node.js 환경에서 생성형 AI API를 실제 서비스 로직에 통합하는 역량 입증.</p>
+            <p><strong>차별화:</strong> 단순 기록용 가계부를 넘어선 지능형 금융 비서로의 발전 가능성 확인.</p>
+        </ol>
+
+        <h3>5.2. 개발 과정의 이슈 및 해결 (Troubleshooting)</h3>
+        <div class="troubleshooting">
+            <h3>Issue 1: 비동기 데이터 처리 이슈</h3>
+            <p><strong>문제:</strong> 대시보드 로딩 시 데이터가 제때 표시되지 않거나 무한 루프 발생.</p>
+            <p><strong>해결:</strong> <code>useEffect</code>의 의존성 배열(Dependency Array)을 정확히 관리하고, 데이터 Fetching 로직을 커스텀 훅으로 분리하여 상태 관리 최적화.</p>
+        </div>
+        <div class="troubleshooting" style="margin-top: 15px;">
+            <h3>Issue 2: 배포 리소스 관리</h3>
+            <p><strong>문제:</strong> AWS 배포 과정에서 RDS 등 클라우드 비용 및 리소스 관리의 어려움.</p>
+            <p><strong>해결:</strong> 프리 티어 리소스 한도 내에서 최적의 인스턴스 타입을 선정하고, 불필요한 연결을 정리하는 Connection Pool 설정 최적화.</p>
+        </div>
+
+        <h2>6. 결론 및 향후 과제</h2>
+        
+        <h3>6.1. 결론</h3>
+        <p>본 프로젝트를 통해 AI 기술을 핀테크 서비스에 접목하는 전체적인 개발 사이클을 경험했습니다. 안정적인 아키텍처 설계와 사용자 친화적인 UI/UX 구현의 중요성을 재확인하는 계기가 되었습니다.</p>
+
+        <h3>6.2. 향후 발전 방향</h3>
+        <ol class="custom-list">
+            <P><strong>OCR 영수증 스캔:</strong> 카메라로 영수증을 찍으면 자동으로 내용을 인식하여 입력하는 기능 추가.</P>
+            <p><strong>예산 설정 및 알림:</strong> 카테고리별 예산을 설정하고 초과 시 경고 알림 발송.</p>
+            <p><strong>모바일 앱 확장:</strong> React Native 등을 활용하여 접근성이 높은 모바일 애플리케이션 버전 개발.</p>
+        </ol>
+    </div>
+</body>
+</html>
